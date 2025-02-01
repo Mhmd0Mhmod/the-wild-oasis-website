@@ -1,13 +1,23 @@
 import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
 import Spinner from "../_components/Spinner";
+import Filter from "../_components/Filter";
+import ReservationReminder from "../_components/ReservationReminder";
 
 export const metadata = {
   title: "Cabins",
 };
 
-export const revalidate = 3600;
-export default function Page() {
+/* 
+  when static generation is enabled, the revalidate property is used to set the time in seconds before the page is regenerated
+  we comment it because we are using searchParams to get the filter value
+  export const revalidate = 60 * 60 * 24; // 24 hours
+*/
+// export const revalidate = 3600;
+
+export default async function Page({ searchParams }) {
+  const filter = (await searchParams).capacity ?? "all";
+
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -21,8 +31,12 @@ export default function Page() {
         home away from home. The perfect spot for a peaceful, calm vacation.
         Welcome to paradise.
       </p>
-      <Suspense fallback={<Spinner />}>
-        <CabinList />
+      <div className="flex justify-end mb-8">
+        <Filter />
+      </div>
+      <Suspense fallback={<Spinner />} key={filter}>
+        <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );
