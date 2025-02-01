@@ -4,12 +4,12 @@ import Link from "next/link";
 import { getCabins } from "../_lib/data-service";
 export const metadata = {
   title: "About",
+  description: "Learn more about The Wild Oasis and our family history",
 };
 
-export const revalidate = 60 * 60 * 24; // 24 hours
+// export const revalidate = 60 * 60 * 24; // 24 hours
 async function Page() {
   const cabins = await getCabins();
-
   return (
     <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
       <div className="col-span-3">
