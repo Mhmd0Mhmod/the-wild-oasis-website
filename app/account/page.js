@@ -1,10 +1,15 @@
+import { auth } from "../_lib/auth";
+
 export const metadata = {
   title: "Your Account",
 };
-function Page() {
+async function Page() {
+  const { user } = await auth();
+
+  const firstName = user?.name.split(" ").at(0);
   return (
     <h2 className="font-semibold text-2xl text-accent-400 mb-7">
-      Welcome, OZO
+      Welcome, {firstName}
     </h2>
   );
 }
