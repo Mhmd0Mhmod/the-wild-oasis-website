@@ -1,9 +1,8 @@
 import DateSelector from "@/app/_components/DateSelector";
 import ReservationForm from "@/app/_components/ReservationForm";
 import { getBookedDatesByCabinId, getSettings } from "@/app/_lib/data-service";
-import ReservationProvider from "./ReservationContext";
 import { auth } from "../_lib/auth";
-import LoginMessage from "@/starter/components/LoginMessage";
+import LoginMessage from "./LoginMessage";
 
 async function Reservation({ cabin }) {
   const [settings, bookedDates] = await Promise.all([
