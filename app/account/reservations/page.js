@@ -1,12 +1,17 @@
 import Link from "next/link";
 import ReservationCard from "./ReservationCard";
+import { auth } from "@/app/_lib/auth";
+import { getBookings } from "@/app/_lib/data-service";
+import ReservationLIst from "@/app/_components/ReservationLIst";
 
 export const metadata = {
   title: "Reservations",
 };
-export default function Page() {
+export default async function Page() {
+  const session = await auth();
+  const bookings = await getBookings(session.user.guestId);
   // CHANGE
-  const bookings = [];
+  // const bookings = [];
 
   return (
     <div>
@@ -22,11 +27,7 @@ export default function Page() {
           </Link>
         </p>
       ) : (
-        <ul className="space-y-6">
-          {bookings.map((booking) => (
-            <ReservationCard booking={booking} key={booking.id} />
-          ))}
-        </ul>
+            <ReservationLIst bookings={bookings}/>
       )}
     </div>
   );
